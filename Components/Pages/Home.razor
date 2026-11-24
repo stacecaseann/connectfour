@@ -1,0 +1,77 @@
+﻿@page "/"
+@using System.Drawing
+@inject GameState State
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+<div class="row">
+     <div class="col-auto">
+     <Board 
+          BoardColor=boardColor
+          Player1Color=player1Color
+          Player2Color=player2Color
+          GameState=State
+          OnAddPlayer1Wins="AddToPlayer1Wins"
+          OnAddPlayer2Wins="AddToPlayer2Wins"
+          OnAddTies="AddToTies" />
+     </div>
+     <div class="col d-flex align-items-center " >
+     <div class="d-flex flex-column gap-3 ">
+          <div class="d-flex gap-16 flex-column align-items-center">
+          <ColorChooser 
+               BoardColor=boardColor
+               Player1Color=player1Color
+               Player2Color=player2Color     
+               OnChangePlayer1Color="ChangePlayer1Color"
+               OnChangePlayer2Color="ChangePlayer2Color"
+               OnChangeBoardColor="ChangeBoardColor"
+               />   
+               </div>
+               <div >
+               <ScoreKeeper
+               Player1Wins = "player1Wins"
+               Player2Wins = "player2Wins"
+               Ties = "ties"></ScoreKeeper>
+               </div>
+            </div>
+     </div> 
+</div>
+
+@code {
+     Color boardColor = Color.Black;
+     Color player1Color =Color.Green;
+     Color player2Color =Color.Purple;
+     int player1Wins = 0;
+     int player2Wins = 0;
+     int ties = 0;
+     protected override void OnInitialized()
+     {
+          State.ResetBoard();
+     }
+
+     protected void ChangePlayer1Color(Color newColor)
+     {
+          player1Color = newColor;
+     }
+     protected void ChangePlayer2Color(Color newColor)
+     {
+          player2Color = newColor;
+     }
+
+     protected void ChangeBoardColor(Color newColor)
+     {
+          boardColor = newColor;
+     }    
+     protected void AddToPlayer1Wins()
+     {
+          player1Wins++;
+     }
+     protected void AddToPlayer2Wins()
+     {
+          player2Wins++;
+     }
+     protected void AddToTies()
+     {
+          ties++;
+     }                  
+}     

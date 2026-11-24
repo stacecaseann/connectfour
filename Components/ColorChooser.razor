@@ -1,0 +1,63 @@
+@using System.Drawing
+@inject GameState State
+
+<div class="d-flex flex-column gap-2 ">
+    <label class="d-flex align-items-center justify-content-between gap-3">Player 1 Color
+    <input type="color" @bind="player1Color"
+                        @bind:after="OnPlayer1ColorChanged"/>
+    </label>
+    <label class="d-flex align-items-center justify-content-between gap-3">Player 2 Color
+    <input type="color" @bind="player2Color"
+                        @bind:after="OnPlayer2ColorChanged"/>
+    </label>
+    <label class="d-flex align-items-center justify-content-between gap-3">Board Color
+    <input type="color" @bind="boardColor"
+                        @bind:after="OnBoardColorChanged"/>
+    </label>        
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<Color> OnChangePlayer1Color { get; set; }
+    [Parameter]
+    public EventCallback<Color> OnChangePlayer2Color { get; set; }
+        [Parameter]
+    public EventCallback<Color> OnChangeBoardColor { get; set; }
+    [Parameter]
+    public Color BoardColor { get; set; } = ColorTranslator.FromHtml("yellow");
+
+    [Parameter]
+    public Color Player1Color { get; set; } = ColorTranslator.FromHtml("red");
+
+    [Parameter]
+    public Color Player2Color { get; set; } = ColorTranslator.FromHtml("blue");
+
+    private string player1Color = string.Empty;
+    private string player2Color = string.Empty;
+    private string boardColor = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        player1Color = ColorTranslator.ToHtml(Player1Color);
+        player2Color = ColorTranslator.ToHtml(Player2Color);
+        boardColor = ColorTranslator.ToHtml(BoardColor);
+    }
+
+    private async Task OnPlayer1ColorChanged()
+    {
+        var newColor = ColorTranslator.FromHtml(player1Color);
+        await OnChangePlayer1Color.InvokeAsync(newColor);
+    }
+
+    private async Task OnPlayer2ColorChanged()
+    {
+        var newColor = ColorTranslator.FromHtml(player2Color);
+        await OnChangePlayer2Color.InvokeAsync(newColor);
+    }
+
+    private async Task OnBoardColorChanged()
+    {
+        var newColor = ColorTranslator.FromHtml(boardColor);
+        await OnChangeBoardColor.InvokeAsync(newColor);
+    }        
+}

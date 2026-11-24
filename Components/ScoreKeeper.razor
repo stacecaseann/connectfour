@@ -1,0 +1,34 @@
+<div class="d-flex flex-row gap-2">
+    <div class="d-flex align-items-center justify-content-between gap-3">
+        Player 1 Wins:
+    </div>
+    <div>
+        @Player1Wins
+    </div>        
+</div>
+<div class="d-flex flex-row gap-2">
+    <div class="d-flex align-items-center justify-content-between gap-3">
+        Player 2 Wins:
+    </div>
+    <div>
+        @Player2Wins
+    </div>        
+</div>
+<div class="d-flex flex-row gap-2">
+    <div class="d-flex align-items-center justify-content-between gap-3">
+        Ties:
+    </div>
+    <div>
+        @Ties
+    </div>        
+</div>
+@code {
+
+    [Parameter]
+    public int Player1Wins {get; set;}
+    [Parameter]
+    public int Player2Wins {get; set;}
+    [Parameter]
+    public int Ties {get; set;}
+
+}
